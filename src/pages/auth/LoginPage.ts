@@ -1,5 +1,5 @@
 // Import Playwright types for Locator and Page
-import { Locator, Page } from "@playwright/test"
+import test, { Locator, Page } from "@playwright/test"
 import { BasePage } from "../01_BasePage";
 
 // Page Object Model (POM) class representing the Login Page
@@ -49,11 +49,15 @@ export class LoginPage extends BasePage {
     }
     // public page actions(Methods)/bahevior
     async goToLoginPage(url: string): Promise<void> {
-        await this.page.goto(url);
+        test.step(`Open the login URL ${url}`, async () => {
+            await this.page.goto(url);
+        })
     }
 
     async getLoginPageTitle(): Promise<string> {
-        return await this.page.title();
+        return test.step(`Fetching the login page title`, async () => {
+            return await this.page.title();
+        });
     }
 
     async isFprgotPwdLinkExist(): Promise<boolean> {
