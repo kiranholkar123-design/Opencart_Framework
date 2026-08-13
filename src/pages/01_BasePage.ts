@@ -1,0 +1,223 @@
+import { BrowserContext, expect, Locator, Page } from "@playwright/test";
+
+export class BasePage {
+  protected readonly page: Page;
+  protected readonly context: BrowserContext;
+
+  constructor(page: Page) {
+    this.page = page;
+    this.context = page.context();
+  }
+
+  // ─── Visibility Check ─────────────────────────────────────────────
+
+  private async checkVisibility(locator: Locator): Promise<void> {
+    try {
+      await expect(locator).toBeVisible();
+    } catch (error) {
+      throw new Error(`❌ Element not visible — Incorrect locator or element not present in DOM — ${error}`);
+    }
+  }
+
+  async waitForElementReady(
+    locator: Locator,
+    options?: {
+      state?: 'visible' | 'attached' | 'detached' | 'hidden';
+    }
+  ): Promise<void> {
+    const state = options?.state ?? 'visible';
+    await locator.waitFor({ state });
+    if (state === 'visible') {
+      await locator.scrollIntoViewIfNeeded();
+    }
+  }
+
+
+  // ─── Navigation ───────────────────────────────────────────────────
+
+  async navigate(url: string, options?: { waitUntil?: 'load' | 'domcontentloaded' | 'networkidle' }): Promise<void> {
+    try {
+      await this.page.goto(url, {
+        waitUntil: options?.waitUntil ?? 'networkidle'
+      });
+    } catch (error: any) {
+      throw new Error(`Failed to navigate to ${url}: ${error.message}`);
+    }
+  }
+
+  async waitForPageLoad(): Promise<void> {
+    await this.page.waitForLoadState('domcontentloaded'); // fires first
+    await this.page.waitForLoadState('networkidle');      // fires after
+  }
+
+  // ─── Actions ──────────────────────────────────────────────────────
+
+  protected async click(locator: Locator): Promise<void> {
+    await this.checkVisibility(locator);   // ✅ captured separately
+    try {
+      await locator.click();
+    } catch (error) {
+      throw new Error(`❌ Could not click element — ${error}`);
+    }
+  }
+
+  async safeClick(locator: Locator,
+    options?: {
+      force?: boolean;
+    }): Promise<void> {
+    try {
+      await this.waitForElementReady(locator);
+      await locator.click({
+        force: options?.force ?? false,
+        trial: false
+      });
+    } catch (error) {
+      const message = error instanceof Error ? error.message : String(error);
+      throw new Error(`Failed to click: ${message}`);
+    }
+  }
+
+  private async fill(locator: Locator, value: string): Promise<void> {
+    await this.checkVisibility(locator);   // ✅ captured separately
+    try {
+      await locator.fill(value);
+    } catch (error) {
+      throw new Error(`❌ Could not fill element — ${error}`);
+    }
+  }
+
+  private async safeFill(locator: Locator, text: string, options?: {
+    clearBefore?: boolean,
+  }) {
+    await this.waitForElementReady(locator);
+    if (options?.clearBefore !== false) {
+      await locator.clear()
+    }
+    await locator.fill(text);
+  }
+
+  private async typeLikeHuman(locator: Locator, text: string, delay: number, options?: {
+    clearBefore?: boolean,
+  }) {
+    await this.waitForElementReady(locator);
+    await locator.click();
+    if (options?.clearBefore !== false) {
+      await locator.clear()
+    }
+    await locator.pressSequentially(text, { delay });
+  }
+
+
+  async getText(locator: Locator, options?: {
+    trim?: boolean
+  }): Promise<string> {
+    await this.waitForElementReady(locator);   // same style as safeFill
+    let text = await locator.innerText();
+    if (options?.trim !== false) {
+      text = text.trim();   // optional cleanup
+    }
+    return text;
+  }
+  // ─── Multiple Tab/Window Handling ──────────────────────────────────────────────────────
+
+  async openMultipleTab(triggerLinks: Locator[]): Promise<Page[]> {
+
+    const childWnds: Page[] = [];
+    for (const trigger of triggerLinks) {
+      const [newPage] = await Promise.all([
+        this.context.waitForEvent('page'),
+        trigger.click()
+      ])
+      await newPage.waitForLoadState();
+      childWnds.push(newPage);
+    }
+    return childWnds;
+  }
+
+  async switchToTab(targetPage: Page) {
+    await targetPage.bringToFront();
+  }
+
+  async closeTab(targetPage: Page, refocusPage?: Page) {
+    await targetPage.close()
+    if (refocusPage) { await this.page.bringToFront() }
+  }
+
+  // ─── Assertions ───────────────────────────────────────────────────
+
+  async assertElementVisible(
+    locator: Locator,
+    message?: string
+  ): Promise<void> {
+    await expect(locator, message).toBeVisible();
+  }
+
+  async assertElementHidden(
+    locator: Locator,
+    message?: string
+  ): Promise<void> {
+    await expect(locator, message).toBeHidden();
+  }
+
+  async assertElementText(
+    locator: Locator,
+    expectedText: string | RegExp,
+    message?: string
+  ): Promise<void> {
+    await expect(locator, message).toHaveText(expectedText);
+  }
+
+  async assertElementAttribute(
+    locator: Locator,
+    attribute: string,
+    value: string,
+    message?: string
+  ): Promise<void> {
+    await expect(locator, message).toHaveAttribute(attribute, value);
+  }
+
+  async assertElementEnabled(
+    locator: Locator,
+    message?: string
+  ): Promise<void> {
+    await expect(locator, message).toBeEnabled();
+  }
+
+  async assertPageURL(
+    expectedURL: string | RegExp,
+    message?: string
+  ): Promise<void> {
+    await expect(this.page, message).toHaveURL(expectedURL);
+  }
+
+  async assertPageTitle(
+    expectedTitle: string | RegExp,
+    message?: string
+  ): Promise<void> {
+    await expect(this.page, message).toHaveTitle(expectedTitle);
+  }
+
+  async assertInputValue(
+    locator: Locator,
+    expectedValue: string,
+    message?: string
+  ): Promise<void> {
+    await expect(locator, message).toHaveValue(expectedValue);
+  }
+
+  // ==================== SCREENSHOT METHODS ====================
+
+  async takeScreenshot(name: string, fullPage: boolean = true): Promise<string> {
+    const timestamp = new Date().toISOString().replace(/[:.]/g, '-');
+    const screenshotPath = `screenshots/${name}_${timestamp}.png`;
+    await this.page.screenshot({ path: screenshotPath, fullPage });
+    return screenshotPath;
+  }
+
+  async takeElementScreenshot(locator: Locator, name: string): Promise<string> {
+    const timestamp = new Date().toISOString().replace(/[:.]/g, '-');
+    const screenshotPath = `screenshots/${name}_${timestamp}.png`;
+    await locator.screenshot({ path: screenshotPath });
+    return screenshotPath;
+  }
+}

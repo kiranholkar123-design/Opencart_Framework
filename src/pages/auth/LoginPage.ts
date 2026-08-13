@@ -1,0 +1,73 @@
+// Import Playwright types for Locator and Page
+import { Locator, Page } from "@playwright/test"
+import { BasePage } from "../01_BasePage";
+
+// Page Object Model (POM) class representing the Login Page
+export class LoginPage extends BasePage {
+
+    // 🔒 Private Locators: Elements on the Login Page
+    private readonly emailid_InpBox: Locator;              // Input field for user email
+    private readonly password_InpBox: Locator;             // Input field for user password
+    private readonly loginBtn: Locator;             // Button to submit login form
+    private readonly forgottenPasswordLink: Locator;// Link to reset forgotten password
+    private readonly logo: Locator;                 // Application logo for branding/validation
+    private readonly aboutUs: Locator;
+    private readonly becomeAPartner: Locator;
+    private readonly contactUs: Locator;
+    private readonly pressReleases: Locator;
+    /**
+     * 🏗️ Constructor: Initializes all locators when a Page instance is passed.
+     * @param page - Playwright Page object used to interact with the browser
+     */
+    constructor(page: Page) {
+        super(page);
+        this.emailid_InpBox = page.getByRole('textbox', { name: 'E-Mail Address' });
+        this.password_InpBox = page.getByRole('textbox', { name: 'Password' });
+        this.loginBtn = page.getByRole('button', { name: 'Login' });
+        this.forgottenPasswordLink = page.getByRole('link', { name: 'Forgotten Password' }).nth(1)
+        this.logo = page.getByAltText('naveenopencart');
+
+        //-------------------------------------------------
+
+        this.aboutUs = page.getByRole('link', { name: 'About Us' }),
+            this.becomeAPartner = page.getByRole('link', { name: 'Become a Partner' }),
+            this.contactUs = page.getByRole('link', { name: 'Contact Us' }),
+            this.pressReleases = page.getByRole('link', { name: 'Press Releases' })
+    }
+
+    // ── skip registry ──────────────────────────────────────────
+    readonly skipVerification = [
+    ];
+
+    async getAllLinks(): Promise<Locator[]> {
+        return [
+            this.aboutUs,
+            // this.becomeAPartner,
+            // this.contactUs,
+            // this.pressReleases
+        ]
+    }
+    // public page actions(Methods)/bahevior
+    async goToLoginPage(url: string): Promise<void> {
+        await this.page.goto(url);
+    }
+
+    async getLoginPageTitle(): Promise<string> {
+        return await this.page.title();
+    }
+
+    async isFprgotPwdLinkExist(): Promise<boolean> {
+        return await this.forgottenPasswordLink.isVisible()
+    }
+
+    async navigateToForgotPasswordPage(): Promise<void> {
+        await this.click(this.forgottenPasswordLink);
+    }
+
+    async doLogin(username: string, password: string): Promise<void> {
+        //console.log(`Attempting login with test credentials for QA validation:\nusername: ${username} \npassword: ${password}`);
+        await this.emailid_InpBox.fill(username);
+        await this.password_InpBox.fill(password);
+        await this.loginBtn.click();
+    }
+}

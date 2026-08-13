@@ -1,0 +1,31 @@
+{
+  "name": "opencart_webframework",
+  "version": "1.0.0",
+  "description": "This is the Open Cart Web App framework using POM",
+  "main": "index.js",
+  "scripts": {
+    "test": "npx playwright test",
+    "test:qa1": "$env:ENV='qa' npx playwright test",
+    "test:qa2": "powershell -Command \"$env:ENV='qa'; npx playwright test\"",
+    "test:qa": "npx cross-env ENV=qa npx playwright test",
+    "testcase": "npx playwright test -g",
+    "report": "npx playwright show-report",
+    "allure:generate": "npx allure generate allure-results --clean -o allure-report",
+    "allure:open": "npx allure open allure-report",
+    "allure:report": "npm run allure:generate && npm run allure:open",
+    "allure:clean": "Remove-Item -Recurse -Force allure-results, allure-report",
+    "testwithallure": "npm run test:qa && npm run allure:report"
+  },
+  "keywords": [],
+  "author": "Kiran Holkar",
+  "license": "ISC",
+  "type": "module",
+  "devDependencies": {
+    "@playwright/test": "^1.60.0",
+    "@types/node": "^25.9.4",
+    "allure-commandline": "^2.43.0",
+    "allure-playwright": "^3.10.0",
+    "cross-env": "^10.1.0",
+    "dotenv": "^17.4.2"
+  }
+}
