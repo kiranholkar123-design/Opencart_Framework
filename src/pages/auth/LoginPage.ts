@@ -12,6 +12,7 @@ export class LoginPage extends BasePage {
     private readonly forgottenPasswordLink: Locator;// Link to reset forgotten password
     private readonly logo: Locator;                 // Application logo for branding/validation
     private readonly aboutUs: Locator;
+    private readonly errorMsg: Locator;
     private readonly becomeAPartner: Locator;
     private readonly contactUs: Locator;
     private readonly pressReleases: Locator;
@@ -26,13 +27,13 @@ export class LoginPage extends BasePage {
         this.loginBtn = page.getByRole('button', { name: 'Login' });
         this.forgottenPasswordLink = page.getByRole('link', { name: 'Forgotten Password' }).nth(1)
         this.logo = page.getByAltText('naveenopencart');
-
+        this.errorMsg = page.locator('div.alert-dismissible')
         //-------------------------------------------------
 
-        this.aboutUs = page.getByRole('link', { name: 'About Us' }),
-            this.becomeAPartner = page.getByRole('link', { name: 'Become a Partner' }),
-            this.contactUs = page.getByRole('link', { name: 'Contact Us' }),
-            this.pressReleases = page.getByRole('link', { name: 'Press Releases' })
+        this.aboutUs = page.getByRole('link', { name: 'About Us' });
+        this.becomeAPartner = page.getByRole('link', { name: 'Become a Partner' });
+        this.contactUs = page.getByRole('link', { name: 'Contact Us' });
+        this.pressReleases = page.getByRole('link', { name: 'Press Releases' })
     }
 
     // ── skip registry ──────────────────────────────────────────
@@ -49,13 +50,38 @@ export class LoginPage extends BasePage {
     }
     // public page actions(Methods)/bahevior
     async goToLoginPage(url: string): Promise<void> {
-        test.step(`Open the login URL ${url}`, async () => {
+        await test.step(`Open the login URL ${url}`, async () => {
             await this.page.goto(url);
         })
     }
 
+    async enterUsername(userName: string): Promise<void> {
+        await test.step(`Fill in username: ${userName}`, async () => {
+            await this.emailid_InpBox.fill(userName);
+        })
+    }
+
+    async enterPassword(password: string): Promise<void> {
+        await test.step(`Fill in password: ${password}`, async () => {
+            await this.password_InpBox.fill(password);
+        })
+    }
+
+    async clickOnLoginBtn(): Promise<void> {
+        await test.step(`Click on Login button`, async () => {
+            await this.loginBtn.click();
+        });
+    }
+
+    async checkErrorMessage(): Promise<boolean> {
+        return await test.step(`Retrieving error message visibility`, async () => {
+            return await this.errorMsg.isVisible();
+        });
+    }
+
+
     async getLoginPageTitle(): Promise<string> {
-        return test.step(`Fetching the login page title`, async () => {
+        return test.step(`Retrieving the login page title`, async () => {
             return await this.page.title();
         });
     }

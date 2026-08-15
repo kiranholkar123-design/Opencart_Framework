@@ -1,10 +1,11 @@
-import { Locator, Page } from "@playwright/test"
+import test, { expect, Locator, Page } from "@playwright/test"
 import { BasePage } from "../01_BasePage"
 
 export class HomePage extends BasePage {
 
     private readonly logoutLink: Locator;
     private readonly homePageHeaders: Locator;
+    private readonly myAcnt_Hdr: Locator;
     //  private readonly loginBtn: Locator;             // Button to submit login form
     // private readonly forgottenPasswordLink: Locator;// Link to reset forgotten password
 
@@ -12,6 +13,7 @@ export class HomePage extends BasePage {
         super(page)
         this.logoutLink = page.getByRole('link', { name: 'Logout' })
         this.homePageHeaders = page.getByRole('heading', { level: 2 })
+        this.myAcnt_Hdr = page.getByRole('heading', { name: 'My Account' })
         //  this.loginBtn = page.getByRole('button', { name: 'Login' });
         // this.forgottenPasswordLink = page.getByRole('link', { name: 'Forgotten Password' }).first();
     }
@@ -27,15 +29,28 @@ export class HomePage extends BasePage {
     }
 
     async getHomePageTitle(): Promise<string> {
-        return await this.page.title();
+        return await test.step(`Retrieving the Home Page title`, async () => {
+            return await this.page.title();
+        });
     }
 
     async isLogOutLinkPresent(): Promise<boolean> {
-        return await this.logoutLink.isVisible();
+        return await test.step(`Check if Logout link is visible`, async () => {
+            return await this.logoutLink.isVisible();
+        });
     }
 
     async doLogOut(): Promise<void> {
-        await this.logoutLink.click();
+        await test.step(`Click on Logout link`, async () => {
+            await this.logoutLink.click();
+        });
+    }
+
+    async loginSuccess(): Promise<void> {
+        await test.step(`Verifying successful login to application`, async () => {
+            const isVisible = await this.logoutLink.isVisible();
+            expect(isVisible, 'Login should succeed and account header should be visible').toBeTruthy();
+        });
     }
 
     async getHomePageHeaders(): Promise<string[]> {
