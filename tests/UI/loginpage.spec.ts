@@ -4,20 +4,38 @@ import { test, expect, Locator } from "../../src/fixtures/baseFixture";
 import { MESSAGES } from "../../src/constants/messages"
 import { Page } from "@playwright/test";
 
+test('Verify user able to login', async ({ NALab, cred }) => {
+    await test.step('launching the URL', async () => {
+        await NALab.auth.loginPage.goToLoginPage(cred.baseUrl)
+    })
 
-// test.beforeEach(async ({ NALab, cred }) => {
-//     await NALab.auth.loginPage.goToLoginPage(cred.baseUrl!);
-//     await NALab.auth.loginPage.navigateToForgotPasswordPage();
-// })
+    await test.step('performing user login with credentials', async () => {
+        await NALab.auth.loginPage.enterUsername(cred.testUserEmail);
+        await NALab.auth.loginPage.enterPassword(cred.testUserPass);
+        await NALab.auth.loginPage.clickOnLoginBtn();
+        await NALab.dashboard.homePage.loginSuccess();
+    })
 
-test('multiple tab handling', async ({ NALab, testData }) => {
+    await test.step('loging out from the app', async () => {
+        await NALab.dashboard.homePage.doLogOut();
+    })
+});
 
-    await NALab.auth.loginPage.goToLoginPage('https://orangehrm.com/contact-sales')
-    let triggerLinks: Locator[] = await NALab.auth.loginPage.getAllLinks();
-    let newpages: Page[] = await NALab.auth.loginPage.openMultipleTab(triggerLinks)
+test('Verify error message on incorrect email', async ({ NALab, cred }) => {
+    await test.step('launching the URL', async () => {
+        await NALab.auth.loginPage.goToLoginPage(cred.baseUrl)
+    })
 
-    await NALab.auth.loginPage.switchToTab(newpages[0]!)
-    await newpages[0]?.title();
-    console.log(await newpages[0]?.title());
-    await NALab.auth.loginPage.closeTab(newpages[0]!);
+    await test.step('entering invalid login credentials', async () => {
+        await NALab.auth.loginPage.enterUsername(cred.testUserEmail);
+        await NALab.auth.loginPage.enterPassword(cred.testUserEmail);
+        await NALab.auth.loginPage.clickOnLoginBtn();
+
+    })
+
+    await test.step('verifing the error message', async () => {
+        const isVisible = await NALab.auth.loginPage.checkErrorMessage();
+        expect(isVisible).toBeTruthy()
+    })
+
 })
