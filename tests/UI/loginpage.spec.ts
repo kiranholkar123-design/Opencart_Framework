@@ -39,3 +39,19 @@ test('Verify error message on incorrect email', async ({ NALab, cred }) => {
     })
 
 })
+
+test('Verify error message on clicking of sign in button on empty email and password',
+    async ({ NALab, cred }) => {
+        await test.step('Launch login page', async () => {
+            await NALab.auth.loginPage.goToLoginPage(cred.baseUrl)
+        })
+
+        await test.step('Click on sign in without credentials', async () => {
+            await NALab.auth.loginPage.clickOnLoginBtn();
+        })
+
+        await test.step('Verify error message visibility', async () => {
+            const isVisible = await NALab.auth.loginPage.checkErrorMessage();
+            expect(isVisible).toBeTruthy()
+        })
+    })
