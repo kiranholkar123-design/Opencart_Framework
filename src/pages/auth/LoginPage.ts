@@ -16,6 +16,7 @@ export class LoginPage extends BasePage {
     private readonly becomeAPartner: Locator;
     private readonly contactUs: Locator;
     private readonly pressReleases: Locator;
+    private readonly forgotTxt: Locator;
     /**
      * 🏗️ Constructor: Initializes all locators when a Page instance is passed.
      * @param page - Playwright Page object used to interact with the browser
@@ -27,6 +28,8 @@ export class LoginPage extends BasePage {
         this.loginBtn = page.getByRole('button', { name: 'Login' });
         this.forgottenPasswordLink = page.getByRole('link', { name: 'Forgotten Password' }).nth(1)
         this.logo = page.getByAltText('naveenopencart');
+        this.forgotTxt = page.locator("#id")
+
         this.errorMsg = page.locator('div.alert-dismissible')
         //-------------------------------------------------
 

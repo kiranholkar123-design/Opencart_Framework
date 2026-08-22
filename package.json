@@ -21,7 +21,7 @@
   "license": "ISC",
   "type": "module",
   "devDependencies": {
-    "@playwright/test": "^1.60.0",
+    "@playwright/test": "^1.62.1",
     "@types/node": "^25.9.4",
     "allure-commandline": "^2.43.0",
     "allure-playwright": "^3.10.0",
@@ -30,5 +30,16 @@
   },
   "dependencies": {
     "xlsx": "^0.18.5"
-  }
+  },
+  "directories": {
+    "test": "tests"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/kiranholkar123-design/Opencart_Framework.git"
+  },
+  "bugs": {
+    "url": "https://github.com/kiranholkar123-design/Opencart_Framework/issues"
+  },
+  "homepage": "https://github.com/kiranholkar123-design/Opencart_Framework#readme"
 }
