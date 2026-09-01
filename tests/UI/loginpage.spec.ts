@@ -21,7 +21,7 @@ test('Verify user able to login', async ({ NALab, cred }) => {
     })
 });
 
-test('Verify error message on incorrect email', async ({ NALab, cred }) => {
+test('Verify error message on incorrect email', async ({ NALab, assert, cred }) => {
     await test.step('launching the URL', async () => {
         await NALab.auth.loginPage.goToLoginPage(cred.baseUrl)
     })
@@ -35,7 +35,7 @@ test('Verify error message on incorrect email', async ({ NALab, cred }) => {
 
     await test.step('verifing the error message', async () => {
         const isVisible = await NALab.auth.loginPage.checkErrorMessage();
-        expect(isVisible).toBeTruthy()
+        assert.isTruthy(isVisible)
     })
 
 })
