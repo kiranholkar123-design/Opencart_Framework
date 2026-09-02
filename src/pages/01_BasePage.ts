@@ -1,4 +1,4 @@
-import { BrowserContext, expect, Locator, Page } from "@playwright/test";
+import test, { BrowserContext, expect, Locator, Page } from "@playwright/test";
 
 export class BasePage {
   protected readonly page: Page;
@@ -77,7 +77,7 @@ export class BasePage {
     }
   }
 
-  private async fill(locator: Locator, value: string): Promise<void> {
+  async fill(locator: Locator, value: string): Promise<void> {
     await this.checkVisibility(locator);   // ✅ captured separately
     try {
       await locator.fill(value);
@@ -86,7 +86,7 @@ export class BasePage {
     }
   }
 
-  private async safeFill(locator: Locator, text: string, options?: {
+  async safeFill(locator: Locator, text: string, options?: {
     clearBefore?: boolean,
   }) {
     await this.waitForElementReady(locator);
@@ -184,10 +184,13 @@ export class BasePage {
   }
 
   async assertPageURL(
+    title: string,
     expectedURL: string | RegExp,
     message?: string
   ): Promise<void> {
-    await expect(this.page, message).toHaveURL(expectedURL);
+    await test.step(title, async () => {
+      await expect(this.page, message).toHaveURL(expectedURL);
+    })
   }
 
   async assertPageTitle(

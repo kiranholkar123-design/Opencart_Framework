@@ -3,20 +3,21 @@
 import { test, expect, Locator } from "../../src/fixtures/baseFixture";
 import { MESSAGES } from "../../src/constants/messages"
 import { Page } from "@playwright/test";
+import * as CONSTANT from "../../src/constants/index"
 
 test('Verify user able to login', async ({ NALab, cred }) => {
-    await test.step('launching the URL', async () => {
+    await test.step('Launching the URL', async () => {
         await NALab.auth.loginPage.goToLoginPage(cred.baseUrl)
     })
 
-    await test.step('performing user login with credentials', async () => {
+    await test.step('Performing user login with credentials', async () => {
         await NALab.auth.loginPage.enterUsername(cred.testUserEmail);
         await NALab.auth.loginPage.enterPassword(cred.testUserPass);
         await NALab.auth.loginPage.clickOnLoginBtn();
         await NALab.dashboard.homePage.loginSuccess();
     })
 
-    await test.step('loging out from the app', async () => {
+    await test.step('Loging out from the app', async () => {
         await NALab.dashboard.homePage.doLogOut();
     })
 });
@@ -35,7 +36,7 @@ test('Verify error message on incorrect email', async ({ NALab, assert, cred }) 
 
     await test.step('verifing the error message', async () => {
         const isVisible = await NALab.auth.loginPage.checkErrorMessage();
-        assert.isTruthy(isVisible)
+        assert.isTruthy('Assert the error message is displayed or not', isVisible)
     })
 
 })
@@ -55,3 +56,41 @@ test('Verify error message on clicking of sign in button on empty email and pass
             expect(isVisible).toBeTruthy()
         })
     })
+
+test('Verify shortcut links on login page', async ({ NALab, cred, assert }) => {
+
+    await test.step('Launch login page', async () => {
+        await NALab.auth.loginPage.goToLoginPage(cred.baseUrl)
+    })
+
+    await test.step('Verify the count of the short cut links',
+        async () => {
+            const linkCount = await NALab.auth.loginPage.getShortCutLinksCount();
+            await assert.toBe("Assert link count is 13", linkCount, 13)
+        }
+    )
+})
+
+test('TC_Login_RegisterLink_RedirectionToSignUp', async ({ NALab, cred, assert }) => {
+
+    await test.step('Launch login page', async () => {
+        await NALab.auth.loginPage.goToLoginPage(cred.baseUrl)
+    })
+
+    await test.step('Verify the Register Account link visible on login page',
+        async () => {
+            const isVisible = await NALab.auth.loginPage.isRegisterAccountLinkDisplayed();
+            await assert.isTruthy("Assert register account link is displayed on login page", isVisible)
+        }
+    )
+
+    await test.step('Click on the Register Account link and redirection to SignUp form',
+        async () => {
+            await NALab.auth.loginPage.clickonRegisterAccountLink();
+            await NALab.auth.loginPage.assertPageURL(
+                "Assert sign up/register account link",
+                CONSTANT.URL.registerAccount
+            )
+        }
+    )
+})

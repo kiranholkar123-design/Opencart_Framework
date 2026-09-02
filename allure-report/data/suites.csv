@@ -1,3 +1,5 @@
 "DESCRIPTION","DURATION IN MS","NAME","PARENT SUITE","START TIME","STATUS","STOP TIME","SUB SUITE","SUITE","TEST CLASS","TEST METHOD"
-"","4787","Verify user able to login","chromium","2026-08-14","passed","2026-08-14","","UI\loginpage.spec.ts","",""
-"","4947","Verify error message on incorrect email","chromium","2026-08-14","passed","2026-08-14","","UI\loginpage.spec.ts","",""
+"","7493","Verify error message on incorrect email","chromium","2026-09-02","passed","2026-09-02","","UI\loginpage.spec.ts","",""
+"","2678","Verify error message on clicking of sign in button on empty email and password","chromium","2026-09-02","passed","2026-09-02","","UI\loginpage.spec.ts","",""
+"","9701","Verify user able to login","chromium","2026-09-02","passed","2026-09-02","","UI\loginpage.spec.ts","",""
+"","6029","Verify shortcut links on login page","chromium","2026-09-02","passed","2026-09-02","","UI\loginpage.spec.ts","",""

@@ -6,9 +6,9 @@ type Fixtures = {
 };
 
 export const test = base.extend<Fixtures>({
-  assert: async ({ page }, use) => {
-    await use(new AssertUtil(page));
+  assert: async ({  }, use) => {
+    await use(new AssertUtil());
   },
 });
 
-export { expect } from '@playwright/test';
+   export { expect } from '@playwright/test';

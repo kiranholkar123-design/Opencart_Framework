@@ -13,7 +13,7 @@
     "allure:generate": "npx allure generate allure-results --clean -o allure-report",
     "allure:open": "npx allure open allure-report",
     "allure:report": "npm run allure:generate && npm run allure:open",
-    "allure:clean": "Remove-Item -Recurse -Force allure-results, allure-report",
+    "allure:clean": "rimraf allure-results allure-report",
     "testwithallure": "npm run test:qa && npm run allure:report"
   },
   "keywords": [],
@@ -26,7 +26,8 @@
     "allure-commandline": "^2.43.0",
     "allure-playwright": "^3.10.0",
     "cross-env": "^10.1.0",
-    "dotenv": "^17.4.2"
+    "dotenv": "^17.4.2",
+    "rimraf": "^6.1.3"
   },
   "dependencies": {
     "xlsx": "^0.18.5"

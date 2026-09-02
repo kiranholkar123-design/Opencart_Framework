@@ -17,6 +17,8 @@ export class LoginPage extends BasePage {
     private readonly contactUs: Locator;
     private readonly pressReleases: Locator;
     private readonly forgotTxt: Locator;
+    private readonly shortCutLinks: Locator;
+    private readonly regAcntLink: Locator;
     /**
      * 🏗️ Constructor: Initializes all locators when a Page instance is passed.
      * @param page - Playwright Page object used to interact with the browser
@@ -37,6 +39,8 @@ export class LoginPage extends BasePage {
         this.becomeAPartner = page.getByRole('link', { name: 'Become a Partner' });
         this.contactUs = page.getByRole('link', { name: 'Contact Us' });
         this.pressReleases = page.getByRole('link', { name: 'Press Releases' })
+        this.shortCutLinks = page.locator('.list-group a');
+        this.regAcntLink = page.getByRole('link', { name: 'Continue' })
     }
 
     // ── skip registry ──────────────────────────────────────────
@@ -103,4 +107,23 @@ export class LoginPage extends BasePage {
         await this.password_InpBox.fill(password);
         await this.loginBtn.click();
     }
+
+    async getShortCutLinksCount(): Promise<number> {
+        return await test.step('Retriving the count of the all links', async () => {
+            return await this.shortCutLinks.count()
+        })
+    }
+
+    async isRegisterAccountLinkDisplayed(): Promise<boolean> {
+        return await test.step('Check visibility of Register Account link', async () => {
+            return await this.regAcntLink.isVisible()
+        })
+    }
+
+    async clickonRegisterAccountLink(): Promise<void> {
+        await test.step('Click on register account link', async () => {
+            await this.regAcntLink.click()
+        })
+    }
+
 }
