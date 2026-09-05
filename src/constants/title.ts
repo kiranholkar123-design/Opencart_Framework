@@ -1,0 +1,17 @@
+export const TITLE = {
+    loginPage_shortCutLinkTitles: [
+  'Login',
+  'Register',
+  'Forgotten Password',
+  'My Account',
+  'Address Book',
+  'Wish List',
+  'Order History',
+  'Downloads',
+  'Recurring payments',
+  'Reward Points',
+  'Returns',
+  'Transactions',
+  'Newsletter'
+]
+}

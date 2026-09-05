@@ -1,12 +1,16 @@
 import test, { BrowserContext, expect, Locator, Page } from "@playwright/test";
+import { NavigationUtil } from "../utils/navigationUtil";
 
 export class BasePage {
   protected readonly page: Page;
   protected readonly context: BrowserContext;
+  readonly navigation: NavigationUtil;
 
   constructor(page: Page) {
     this.page = page;
     this.context = page.context();
+    this.navigation = new NavigationUtil(page)
+
   }
 
   // ─── Visibility Check ─────────────────────────────────────────────
@@ -52,13 +56,16 @@ export class BasePage {
 
   // ─── Actions ──────────────────────────────────────────────────────
 
-  protected async click(locator: Locator): Promise<void> {
-    await this.checkVisibility(locator);   // ✅ captured separately
-    try {
-      await locator.click();
-    } catch (error) {
-      throw new Error(`❌ Could not click element — ${error}`);
-    }
+  protected async click(step: string, locator: Locator): Promise<void> {
+    await test.step(step, async () => {
+      await this.checkVisibility(locator);   // ✅ captured separately
+      try {
+        await locator.click();
+      } catch (error) {
+        throw new Error(`❌ Could not click element — ${error}`);
+      }
+    })
+
   }
 
   async safeClick(locator: Locator,
@@ -77,13 +84,15 @@ export class BasePage {
     }
   }
 
-  async fill(locator: Locator, value: string): Promise<void> {
-    await this.checkVisibility(locator);   // ✅ captured separately
-    try {
-      await locator.fill(value);
-    } catch (error) {
-      throw new Error(`❌ Could not fill element — ${error}`);
-    }
+  async fill(step: string, locator: Locator, value: string): Promise<void> {
+    await test.step(step, async () => {
+      await this.checkVisibility(locator);   // ✅ captured separately
+      try {
+        await locator.fill(value);
+      } catch (error) {
+        throw new Error(`❌ Could not fill element — ${error}`);
+      }
+    })
   }
 
   async safeFill(locator: Locator, text: string, options?: {
@@ -194,10 +203,13 @@ export class BasePage {
   }
 
   async assertPageTitle(
+    title: string,
     expectedTitle: string | RegExp,
     message?: string
   ): Promise<void> {
-    await expect(this.page, message).toHaveTitle(expectedTitle);
+    await test.step(title, async () => {
+      await expect(this.page, message).toHaveTitle(expectedTitle);
+    })
   }
 
   async assertInputValue(

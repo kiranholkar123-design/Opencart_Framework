@@ -9,7 +9,8 @@ export class LoginPage extends BasePage {
     private readonly emailid_InpBox: Locator;              // Input field for user email
     private readonly password_InpBox: Locator;             // Input field for user password
     private readonly loginBtn: Locator;             // Button to submit login form
-    private readonly forgottenPasswordLink: Locator;// Link to reset forgotten password
+    private readonly forgottenPasswordLink: Locator;
+    private readonly forgPass_shortCutLink: Locator;// Link to reset forgotten password
     private readonly logo: Locator;                 // Application logo for branding/validation
     private readonly aboutUs: Locator;
     private readonly errorMsg: Locator;
@@ -28,7 +29,8 @@ export class LoginPage extends BasePage {
         this.emailid_InpBox = page.getByRole('textbox', { name: 'E-Mail Address' });
         this.password_InpBox = page.getByRole('textbox', { name: 'Password' });
         this.loginBtn = page.getByRole('button', { name: 'Login' });
-        this.forgottenPasswordLink = page.getByRole('link', { name: 'Forgotten Password' }).nth(1)
+        this.forgottenPasswordLink = page.getByRole('link', { name: 'Forgotten Password' }).nth(0)
+        this.forgPass_shortCutLink = page.getByRole('link', { name: 'Forgotten Password' }).nth(1)
         this.logo = page.getByAltText('naveenopencart');
         this.forgotTxt = page.locator("#id")
 
@@ -98,7 +100,23 @@ export class LoginPage extends BasePage {
     }
 
     async navigateToForgotPasswordPage(): Promise<void> {
-        await this.click(this.forgottenPasswordLink);
+        await this.click(
+            'Click on the forgot password link from shortcut links',
+            this.forgPass_shortCutLink)
+        await this.navigation.waitForLoadState(
+            'Wait for forgot password page to load',
+            'load'
+        )
+    }
+
+    async clickOnForgotPasswordShortCutLinkAndNavigate(): Promise<void> {
+        await test.step('Navigate to forgot password page by clicking on short cut link', async () => {
+            await this.forgPass_shortCutLink.click()
+            await this.navigation.waitForLoadState(
+                'Wait for forgot password page to load',
+                'load'
+            )
+        })
     }
 
     async doLogin(username: string, password: string): Promise<void> {
@@ -111,6 +129,12 @@ export class LoginPage extends BasePage {
     async getShortCutLinksCount(): Promise<number> {
         return await test.step('Retriving the count of the all links', async () => {
             return await this.shortCutLinks.count()
+        })
+    }
+
+    async getShortCutLinksTitles(): Promise<string[]> {
+        return await test.step('Retriving the text of the all links', async () => {
+            return await this.shortCutLinks.allTextContents()
         })
     }
 

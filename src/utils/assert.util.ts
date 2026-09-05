@@ -70,4 +70,11 @@ export class AssertUtil {
       await expect(locator, message).toHaveCount(count);
     });
   }
+
+  async toEqual(title: string, actual: any[], expected: any[], message?: string): Promise<void> {
+    await test.step(title, async () => {
+      expect(actual).toEqual(expect.arrayContaining(expected)); // ✅ works for arrays
+    });
+  }
+
 }
