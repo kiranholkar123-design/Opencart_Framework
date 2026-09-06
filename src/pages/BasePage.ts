@@ -1,15 +1,44 @@
 import test, { BrowserContext, expect, Locator, Page } from "@playwright/test";
 import { NavigationUtil } from "../utils/navigationUtil";
+import { WaitUtil } from "../utils/wait.util";
+import { ActionUtil } from "../utils/action.util";
+import { AssertUtil } from "../utils/assert.util";
+import { SoftAssertUtil } from "../utils/softAssert.util";
+import { ScreenshotUtil } from "../utils/screenshot.util";
+import { DialogUtil } from "../utils/dialog.util";
+import { StorageUtil } from "../utils/storage.util";
+import { FrameUtil } from "../utils/frame.util";
 
 export class BasePage {
   protected readonly page: Page;
   protected readonly context: BrowserContext;
+
+  // =========================================================
+  // UTIL INSTANCES (shared across all pages extending BasePage)
+  // =========================================================
   readonly navigation: NavigationUtil;
+  readonly wait: WaitUtil;
+  readonly action: ActionUtil;
+  readonly softAssert: SoftAssertUtil;
+  readonly screenshot: ScreenshotUtil;
+  readonly dialog: DialogUtil;
+  readonly storage: StorageUtil;
+  readonly frame: FrameUtil;
 
   constructor(page: Page) {
     this.page = page;
     this.context = page.context();
     this.navigation = new NavigationUtil(page)
+
+
+    this.navigation = new NavigationUtil(page);
+    this.wait = new WaitUtil(page);
+    this.action = new ActionUtil(page);
+    this.softAssert = new SoftAssertUtil();
+    this.screenshot = new ScreenshotUtil(page);
+    this.dialog = new DialogUtil(page);
+    this.storage = new StorageUtil(page, this.context);
+    this.frame = new FrameUtil(page);
 
   }
 
@@ -52,80 +81,6 @@ export class BasePage {
   async waitForPageLoad(): Promise<void> {
     await this.page.waitForLoadState('domcontentloaded'); // fires first
     await this.page.waitForLoadState('networkidle');      // fires after
-  }
-
-  // ─── Actions ──────────────────────────────────────────────────────
-
-  protected async click(step: string, locator: Locator): Promise<void> {
-    await test.step(step, async () => {
-      await this.checkVisibility(locator);   // ✅ captured separately
-      try {
-        await locator.click();
-      } catch (error) {
-        throw new Error(`❌ Could not click element — ${error}`);
-      }
-    })
-
-  }
-
-  async safeClick(locator: Locator,
-    options?: {
-      force?: boolean;
-    }): Promise<void> {
-    try {
-      await this.waitForElementReady(locator);
-      await locator.click({
-        force: options?.force ?? false,
-        trial: false
-      });
-    } catch (error) {
-      const message = error instanceof Error ? error.message : String(error);
-      throw new Error(`Failed to click: ${message}`);
-    }
-  }
-
-  async fill(step: string, locator: Locator, value: string): Promise<void> {
-    await test.step(step, async () => {
-      await this.checkVisibility(locator);   // ✅ captured separately
-      try {
-        await locator.fill(value);
-      } catch (error) {
-        throw new Error(`❌ Could not fill element — ${error}`);
-      }
-    })
-  }
-
-  async safeFill(locator: Locator, text: string, options?: {
-    clearBefore?: boolean,
-  }) {
-    await this.waitForElementReady(locator);
-    if (options?.clearBefore !== false) {
-      await locator.clear()
-    }
-    await locator.fill(text);
-  }
-
-  private async typeLikeHuman(locator: Locator, text: string, delay: number, options?: {
-    clearBefore?: boolean,
-  }) {
-    await this.waitForElementReady(locator);
-    await locator.click();
-    if (options?.clearBefore !== false) {
-      await locator.clear()
-    }
-    await locator.pressSequentially(text, { delay });
-  }
-
-
-  async getText(locator: Locator, options?: {
-    trim?: boolean
-  }): Promise<string> {
-    await this.waitForElementReady(locator);   // same style as safeFill
-    let text = await locator.innerText();
-    if (options?.trim !== false) {
-      text = text.trim();   // optional cleanup
-    }
-    return text;
   }
 
   // =========================================================
@@ -203,7 +158,7 @@ export class BasePage {
       return await locator.getAttribute(attrName);
     });
   }
-  
+
   // ─── Multiple Tab/Window Handling ──────────────────────────────────────────────────────
 
   async openMultipleTab(triggerLinks: Locator[]): Promise<Page[]> {

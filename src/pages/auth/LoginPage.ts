@@ -60,22 +60,18 @@ export class LoginPage extends BasePage {
     }
 
     async navigateToForgotPasswordPage(): Promise<void> {
-        await this.click(
+        await this.action.click(
             'Click on the forgot password link from shortcut links',
             this.forgPass_shortCutLink)
         await this.navigation.waitForLoadState(
-            'Wait for forgot password page to load',
-            'load'
-        )
+            'Wait for forgot password page to load')
     }
 
     async clickOnForgotPasswordShortCutLinkAndNavigate(): Promise<void> {
         await test.step('Navigate to forgot password page by clicking on short cut link', async () => {
-            await this.forgPass_shortCutLink.click()
+            await this.action.click('Click on forgot password link', this.forgPass_shortCutLink)
             await this.navigation.waitForLoadState(
-                'Wait for forgot password page to load',
-                'load'
-            )
+                'Wait for forgot password page to load')
         })
     }
 
@@ -95,23 +91,27 @@ export class LoginPage extends BasePage {
     }
 
     async clickOnLoginBtn(): Promise<void> {
-        await this.click('Click on Login button', this.loginBtn)
+        await this.action.click('Click on Login button', this.loginBtn)
         await this.navigation.waitForLoadState('Wait for Dashboard page to load')
     }
 
-    async clickonRegisterAccountLink(): Promise<void> {
-        await test.step('Click on register account link', async () => {
-            await this.regAcntLink.click()
+    async openRegisterAccountPage(): Promise<void> {
+        await test.step('Open register account page from login page', async () => {
+            await this.action.click('Click on register account link', this.regAcntLink)
+            await this.navigation.waitForLoadState(
+                'Wait for register account page to load')
         })
     }
+
     // =========================================================
     // WORKFLOW ACTIONS (composite — multiple atomic actions combined)
     // =========================================================
-    async doLogin(username: string, password: string): Promise<void> {
+    async doLogin(email: string, password: string): Promise<void> {
         //console.log(`Attempting login with test credentials for QA validation:\nusername: ${username} \npassword: ${password}`);
-        await this.emailid_InpBox.fill(username);
-        await this.password_InpBox.fill(password);
-        await this.loginBtn.click();
+        await this.action.fill('Enter email id', this.emailid_InpBox, email)
+        await this.action.fill('Enter email id', this.password_InpBox, password)
+        await this.action.click('Click on login button', this.loginBtn)
+        await this.navigation.waitForLoadState('Wait for home page to load')
     }
     // =========================================================
     // STATE GETTERS (raw values — no assertions here)

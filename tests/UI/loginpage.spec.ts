@@ -98,7 +98,7 @@ test('TC_Login_RegisterLink_RedirectionToSignUp',
 
         await test.step('Click on the Register Account link and redirection to SignUp form',
             async () => {
-                await NALab.auth.loginPage.clickonRegisterAccountLink();
+                await NALab.auth.loginPage.openRegisterAccountPage();
                 await NALab.auth.loginPage.assertPageURL(
                     "Assert sign up/register account link",
                     CONSTANT.URL.registerAccount
