@@ -1,4 +1,4 @@
-import type { PageManager } from "../pages/02_PageManager";
+import type { PageManager } from "../pages/PageManager";
 import type { AppEnv } from "../../config/evn.loader";
 
 export type PageEntry = {

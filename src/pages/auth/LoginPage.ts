@@ -1,10 +1,17 @@
 // Import Playwright types for Locator and Page
 import test, { Locator, Page } from "@playwright/test"
-import { BasePage } from "../01_BasePage";
+import { BasePage } from "../BasePage";
 
 // Page Object Model (POM) class representing the Login Page
 export class LoginPage extends BasePage {
 
+    // =========================================================
+    // FIELDS
+    // =========================================================
+
+    // =========================================================
+    // LOCATORS
+    // =========================================================
     // 🔒 Private Locators: Elements on the Login Page
     private readonly emailid_InpBox: Locator;              // Input field for user email
     private readonly password_InpBox: Locator;             // Input field for user password
@@ -20,10 +27,14 @@ export class LoginPage extends BasePage {
     private readonly forgotTxt: Locator;
     private readonly shortCutLinks: Locator;
     private readonly regAcntLink: Locator;
+
+    // =========================================================
+    // CONSTRUCTOR
+    // =========================================================
     /**
-     * 🏗️ Constructor: Initializes all locators when a Page instance is passed.
-     * @param page - Playwright Page object used to interact with the browser
-     */
+  * 🏗️ Constructor: Initializes all locators when a Page instance is passed.
+  * @param page - Playwright Page object used to interact with the browser
+  */
     constructor(page: Page) {
         super(page);
         this.emailid_InpBox = page.getByRole('textbox', { name: 'E-Mail Address' });
@@ -45,58 +56,11 @@ export class LoginPage extends BasePage {
         this.regAcntLink = page.getByRole('link', { name: 'Continue' })
     }
 
-    // ── skip registry ──────────────────────────────────────────
-    readonly skipVerification = [
-    ];
-
-    async getAllLinks(): Promise<Locator[]> {
-        return [
-            this.aboutUs,
-            // this.becomeAPartner,
-            // this.contactUs,
-            // this.pressReleases
-        ]
-    }
-    // public page actions(Methods)/bahevior
+    // =========================================================
+    // NAVIGATION (entry point to this page)
+    // =========================================================
     async goToLoginPage(url: string): Promise<void> {
-        await test.step(`Open the login URL ${url}`, async () => {
-            await this.page.goto(url);
-        })
-    }
-
-    async enterUsername(userName: string): Promise<void> {
-        await test.step(`Fill in username: ${userName}`, async () => {
-            await this.emailid_InpBox.fill(userName);
-        })
-    }
-
-    async enterPassword(password: string): Promise<void> {
-        await test.step(`Fill in password: ${password}`, async () => {
-            await this.password_InpBox.fill(password);
-        })
-    }
-
-    async clickOnLoginBtn(): Promise<void> {
-        await test.step(`Click on Login button`, async () => {
-            await this.loginBtn.click();
-        });
-    }
-
-    async checkErrorMessage(): Promise<boolean> {
-        return await test.step(`Retrieving error message visibility`, async () => {
-            return await this.errorMsg.isVisible();
-        });
-    }
-
-
-    async getLoginPageTitle(): Promise<string> {
-        return test.step(`Retrieving the login page title`, async () => {
-            return await this.page.title();
-        });
-    }
-
-    async isFprgotPwdLinkExist(): Promise<boolean> {
-        return await this.forgottenPasswordLink.isVisible()
+        await this.navigation.goto('Open the Login URL', url)
     }
 
     async navigateToForgotPasswordPage(): Promise<void> {
@@ -118,12 +82,56 @@ export class LoginPage extends BasePage {
             )
         })
     }
+    // =========================================================
+    // ATOMIC ACTIONS (single user interaction each)
+    // =========================================================
+    async enterUsername(userName: string): Promise<void> {
+        await test.step(`Fill in username: ${userName}`, async () => {
+            await this.emailid_InpBox.fill(userName);
+        })
+    }
 
+    async enterPassword(password: string): Promise<void> {
+        await test.step(`Fill in password: ${password}`, async () => {
+            await this.password_InpBox.fill(password);
+        })
+    }
+
+    async clickOnLoginBtn(): Promise<void> {
+        await this.click('Click on Login button', this.loginBtn)
+        await this.navigation.waitForLoadState('Wait for Dashboard page to load')
+    }
+
+    async clickonRegisterAccountLink(): Promise<void> {
+        await test.step('Click on register account link', async () => {
+            await this.regAcntLink.click()
+        })
+    }
+    // =========================================================
+    // WORKFLOW ACTIONS (composite — multiple atomic actions combined)
+    // =========================================================
     async doLogin(username: string, password: string): Promise<void> {
         //console.log(`Attempting login with test credentials for QA validation:\nusername: ${username} \npassword: ${password}`);
         await this.emailid_InpBox.fill(username);
         await this.password_InpBox.fill(password);
         await this.loginBtn.click();
+    }
+    // =========================================================
+    // STATE GETTERS (raw values — no assertions here)
+    // =========================================================
+    async getAllLinks(): Promise<Locator[]> {
+        return [
+            this.aboutUs,
+            // this.becomeAPartner,
+            // this.contactUs,
+            // this.pressReleases
+        ]
+    }
+
+    async getLoginPageTitle(): Promise<string> {
+        return test.step(`Retrieving the login page title`, async () => {
+            return await this.page.title();
+        });
     }
 
     async getShortCutLinksCount(): Promise<number> {
@@ -137,17 +145,23 @@ export class LoginPage extends BasePage {
             return await this.shortCutLinks.allTextContents()
         })
     }
+    // =========================================================
+    // LOCATOR GETTERS (expose Locator only when assert needs it directly)
+    // =========================================================
+
+    async checkErrorMessage(): Promise<boolean> {
+        return await test.step(`Retrieving error message visibility`, async () => {
+            return await this.errorMsg.isVisible();
+        });
+    }
+
+    async isFprgotPwdLinkExist(): Promise<boolean> {
+        return await this.forgottenPasswordLink.isVisible()
+    }
 
     async isRegisterAccountLinkDisplayed(): Promise<boolean> {
         return await test.step('Check visibility of Register Account link', async () => {
             return await this.regAcntLink.isVisible()
         })
     }
-
-    async clickonRegisterAccountLink(): Promise<void> {
-        await test.step('Click on register account link', async () => {
-            await this.regAcntLink.click()
-        })
-    }
-
 }

@@ -1,5 +1,5 @@
 import { test as contextTest } from "../fixtures/contextFixture";
-import { PageManager } from "../pages/02_PageManager";
+import { PageManager } from "../pages/PageManager";
 
 
 type pageFixtures = {
