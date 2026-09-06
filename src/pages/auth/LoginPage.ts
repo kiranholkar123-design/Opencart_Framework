@@ -109,7 +109,7 @@ export class LoginPage extends BasePage {
     async doLogin(email: string, password: string): Promise<void> {
         //console.log(`Attempting login with test credentials for QA validation:\nusername: ${username} \npassword: ${password}`);
         await this.action.fill('Enter email id', this.emailid_InpBox, email)
-        await this.action.fill('Enter email id', this.password_InpBox, password)
+        await this.action.fill('Enter password', this.password_InpBox, password)
         await this.action.click('Click on login button', this.loginBtn)
         await this.navigation.waitForLoadState('Wait for home page to load')
     }

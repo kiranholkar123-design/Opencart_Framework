@@ -47,15 +47,15 @@ export class HomePage extends BasePage {
     }
 
     async doLogOut(): Promise<void> {
-        await test.step(`Click on Logout link`, async () => {
-            await this.logoutLink.click();
+        await test.step(`Click on logout link and wait to logout`, async () => {
+            await this.action.click('Click on the logout link', this.logoutLink)
+            await this.navigation.waitForLoadState('Wait for login page to load')
         });
     }
 
-    async loginSuccess(): Promise<void> {
-        await test.step(`Verifying successful login to application`, async () => {
-            const isVisible = await this.logoutLink.isVisible();
-            expect(isVisible, 'Login should succeed and account header should be visible').toBeTruthy();
+    async isLoginSuccess(): Promise<boolean> {
+        return await test.step(`Verifying successful login to application`, async () => {
+            return await this.wait.waitForVisible('Wait for logout link to visible', this.logoutLink)
         });
     }
 

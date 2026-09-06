@@ -11,14 +11,12 @@ test('Verify user able to login',
             await NALab.auth.loginPage.goToLoginPage(cred.baseUrl)
         })
 
-        await test.step('Performing user login with credentials', async () => {
-            await NALab.auth.loginPage.enterUsername(cred.testUserEmail);
-            await NALab.auth.loginPage.enterPassword(cred.testUserPass);
-            await NALab.auth.loginPage.clickOnLoginBtn();
-            await NALab.dashboard.homePage.loginSuccess();
+        await test.step('Perform login with valid credentials', async () => {
+            await NALab.auth.loginPage.doLogin(cred.testUserEmail, cred.testUserPass)
+            await NALab.dashboard.homePage.isLoginSuccess();
         })
 
-        await test.step('Loging out from the app', async () => {
+        await test.step('Perform log out from the app', async () => {
             await NALab.dashboard.homePage.doLogOut();
         })
     });

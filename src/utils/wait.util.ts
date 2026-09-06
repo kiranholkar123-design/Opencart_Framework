@@ -7,12 +7,14 @@ export class WaitUtil {
     // ELEMENT WAITS
     // =========================================================
 
-    async waitForVisible(title: string, locator: Locator, timeout?: number): Promise<void> {
-        await test.step(title, async () => {
-            await locator.waitFor({
+    async waitForVisible(title: string, locator: Locator, timeout?: number): Promise<boolean> {
+        return await test.step(title, async () => {
+            return await locator.waitFor({
                 state: 'visible',
                 ...(timeout !== undefined && { timeout }),
-            });
+            })
+                .then(() => true)
+                .catch(() => false);
         });
     }
 
