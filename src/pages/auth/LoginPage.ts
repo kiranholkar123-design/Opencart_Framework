@@ -31,10 +31,6 @@ export class LoginPage extends BasePage {
     // =========================================================
     // CONSTRUCTOR
     // =========================================================
-    /**
-  * 🏗️ Constructor: Initializes all locators when a Page instance is passed.
-  * @param page - Playwright Page object used to interact with the browser
-  */
     constructor(page: Page) {
         super(page);
         this.emailid_InpBox = page.getByRole('textbox', { name: 'E-Mail Address' });
@@ -82,6 +78,7 @@ export class LoginPage extends BasePage {
             )
         })
     }
+
     // =========================================================
     // ATOMIC ACTIONS (single user interaction each)
     // =========================================================

@@ -127,6 +127,83 @@ export class BasePage {
     }
     return text;
   }
+
+  // =========================================================
+  // CHECKS / VERIFICATION METHODS (shared across all pages)
+  // =========================================================
+
+  /** Step 1: Check if element is visible */
+  async isVisible(title: string, locator: Locator): Promise<boolean> {
+    return await test.step(title, async () => {
+      return await locator.isVisible();
+    });
+  }
+
+  /** Step 2: Check if element is hidden */
+  async isHidden(title: string, locator: Locator): Promise<boolean> {
+    return await test.step(title, async () => {
+      return await locator.isHidden();
+    });
+  }
+
+  /** Step 3: Check if element is enabled */
+  async isEnabled(title: string, locator: Locator): Promise<boolean> {
+    return await test.step(title, async () => {
+      return await locator.isEnabled();
+    });
+  }
+
+  /** Step 4: Check if element is disabled */
+  async isDisabled(title: string, locator: Locator): Promise<boolean> {
+    return await test.step(title, async () => {
+      return await locator.isDisabled();
+    });
+  }
+
+  /** Step 5: Check if checkbox/radio is checked */
+  async isChecked(title: string, locator: Locator): Promise<boolean> {
+    return await test.step(title, async () => {
+      return await locator.isChecked();
+    });
+  }
+
+  /** Step 6: Check if element's text exactly matches expected value */
+  async hasExactText(title: string, locator: Locator, expectedText: string): Promise<boolean> {
+    return await test.step(title, async () => {
+      const actualText = await locator.textContent();
+      return actualText?.trim() === expectedText.trim();
+    });
+  }
+
+  /** Step 7: Check if element's text contains expected substring */
+  async hasPartialText(title: string, locator: Locator, expectedText: string): Promise<boolean> {
+    return await test.step(title, async () => {
+      const actualText = await locator.textContent();
+      return actualText?.includes(expectedText) ?? false;
+    });
+  }
+
+  /** Step 8: Check if element is present in DOM (even if not visible) */
+  async isPresentInDOM(title: string, locator: Locator): Promise<boolean> {
+    return await test.step(title, async () => {
+      return (await locator.count()) > 0;
+    });
+  }
+
+  /** Step 9: Get count of matching elements */
+  async getElementCount(title: string, locator: Locator): Promise<number> {
+    return await test.step(title, async () => {
+      return await locator.count();
+    });
+  }
+
+  /** Step 10: Get a specific attribute's value */
+  async getAttributeValue(title: string, locator: Locator, attrName: string): Promise<string | null> {
+    return await test.step(title, async () => {
+      return await locator.getAttribute(attrName);
+    });
+  }
+  
   // ─── Multiple Tab/Window Handling ──────────────────────────────────────────────────────
 
   async openMultipleTab(triggerLinks: Locator[]): Promise<Page[]> {
