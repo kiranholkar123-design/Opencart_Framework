@@ -1,4 +1,4 @@
-import { RandomUtils } from "../utils/RandomUtils";
+import { RandomUtils } from "../helpers/randomUtils";
 
 
 const USERS = [

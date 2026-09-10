@@ -1,13 +1,13 @@
 import test, { BrowserContext, expect, Locator, Page } from "@playwright/test";
-import { NavigationUtil } from "../utils/navigationUtil";
-import { WaitUtil } from "../utils/wait.util";
-import { ActionUtil } from "../utils/action.util";
-import { AssertUtil } from "../utils/assert.util";
-import { SoftAssertUtil } from "../utils/softAssert.util";
-import { ScreenshotUtil } from "../utils/screenshot.util";
-import { DialogUtil } from "../utils/dialog.util";
-import { StorageUtil } from "../utils/storage.util";
-import { FrameUtil } from "../utils/frame.util";
+import { NavigationUtil } from "../utils/navigation/navigationUtil";
+import { WaitUtil } from "../utils/interaction/wait.util";
+import { ActionUtil } from "../utils/interaction/action.util";
+import { AssertUtil } from "../utils/assertions/assert.util";
+import { SoftAssertUtil } from "../utils/assertions/softAssert.util";
+import { ScreenshotUtil } from "../utils/browser/screenshot.util";
+import { DialogUtil } from "../utils/browser/dialog.util";
+import { StorageUtil } from "../utils/browser/storage.util";
+import { FrameUtil } from "../utils/navigation/frame.util";
 
 export class BasePage {
   protected readonly page: Page;
@@ -42,6 +42,9 @@ export class BasePage {
 
   }
 
+  async pause(): Promise<void> {
+    await this.page.pause()
+  }
   // ─── Visibility Check ─────────────────────────────────────────────
 
   private async checkVisibility(locator: Locator): Promise<void> {

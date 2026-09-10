@@ -1,4 +1,4 @@
-import { RandomUtils } from "../utils/RandomUtils";
+import { RandomUtils } from "../helpers/randomUtils";
 
 // 20 unreal (fictional) institute name + location pairs
 const INSTITUTE: { name: string; location: string }[] = [

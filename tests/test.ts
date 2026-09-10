@@ -1,7 +1,7 @@
 import { Browser, chromium, Page, request } from "@playwright/test";
 import { LoginPage } from "../src/pages/auth/LoginPage";
 import { Context } from "node:vm";
-import { RandomUtils } from "../src/utils/RandomUtils";
+import { RandomUtils } from "../src/helpers/randomUtils";
 
 
 // (async () => {

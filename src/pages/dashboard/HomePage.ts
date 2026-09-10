@@ -1,8 +1,20 @@
 import test, { expect, Locator, Page } from "@playwright/test"
 import { BasePage } from "../BasePage"
+import * as CONSTANTS from '../../constants'
 
 export class HomePage extends BasePage {
 
+
+
+
+
+    // =========================================================
+    // FIELDS
+    // =========================================================
+
+    // =========================================================
+    // LOCATORS
+    // =========================================================
     private readonly logoutLink: Locator;
     private readonly homePageHeaders: Locator;
     private readonly myAcnt_Hdr: Locator;
@@ -11,7 +23,9 @@ export class HomePage extends BasePage {
     private readonly newslattter_hrd: Locator
     //  private readonly loginBtn: Locator;             // Button to submit login form
     // private readonly forgottenPasswordLink: Locator;// Link to reset forgotten password
-
+    // =========================================================
+    // CONSTRUCTOR
+    // =========================================================
     constructor(page: Page) {
         super(page)
         this.logoutLink = page.getByRole('link', { name: 'Logout' })
@@ -23,15 +37,28 @@ export class HomePage extends BasePage {
         //  this.loginBtn = page.getByRole('button', { name: 'Login' });
         // this.forgottenPasswordLink = page.getByRole('link', { name: 'Forgotten Password' }).first();
     }
+    // =========================================================
+    // NAVIGATION (entry point to this page)
+    // =========================================================
 
-    // ── skip registry ──────────────────────────────────────────
-    readonly skipVerification = [
-    ];
+    // =========================================================
+    // ATOMIC ACTIONS (single user interaction each)
+    // =========================================================
 
-    async waitForDashboard(): Promise<boolean> {
-        // DOM parsed
-        await this.page.waitForLoadState("domcontentloaded");
-        return await this.logoutLink.isVisible();
+    // =========================================================
+    // WORKFLOW ACTIONS (composite — multiple atomic actions combined)
+    // =========================================================
+
+    // =========================================================
+    // STATE GETTERS (raw values — no assertions here)
+    // =========================================================
+
+    // =========================================================
+    // LOCATOR GETTERS (expose Locator only when assert needs it directly)
+    // =========================================================
+
+    async waitForHomePageToLoad(): Promise<void> {
+        await this.navigation.waitForURL(`Wait for HomePage to load`, CONSTANTS.URL.myAccount)
     }
 
     async getHomePageTitle(): Promise<string> {
@@ -46,11 +73,8 @@ export class HomePage extends BasePage {
         });
     }
 
-    async doLogOut(): Promise<void> {
-        await test.step(`Click on logout link and wait to logout`, async () => {
-            await this.action.click('Click on the logout link', this.logoutLink)
-            await this.navigation.waitForLoadState('Wait for login page to load')
-        });
+    async clickOnLogOut(): Promise<void> {
+        await this.action.click('Click on the logout link', this.logoutLink)
     }
 
     async isLoginSuccess(): Promise<boolean> {

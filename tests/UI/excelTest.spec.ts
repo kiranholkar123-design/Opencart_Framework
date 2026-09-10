@@ -1,5 +1,5 @@
 import { test } from "../../src/fixtures/baseFixture";
-import { ExcelUtils } from "../../src/utils/excelUtil";
+import { ExcelUtils } from "../../src/helpers/excelUtil";
 
 test('excel test', async ({ }) => {
 

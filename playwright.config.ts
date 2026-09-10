@@ -23,10 +23,17 @@ export default defineConfig({
       suiteTitle: true
     }]
   ],
+  timeout: 1000 * 60 * 2,
+  expect: {
+    timeout: 5000 // ⏱️ default timeout for all expect() assertions
+  },
   /* Shared settings for all the projects below. See https://playwright.dev/docs/api/class-testoptions. */
   use: {
     baseURL: ENV.baseUrl,
     screenshot: 'on',
+    actionTimeout: 30_000,
+    navigationTimeout: 10_000,
+
     headless: false,
     video: 'retain-on-failure',
     /* Collect trace when retrying the failed test. See https://playwright.dev/docs/trace-viewer */
@@ -36,12 +43,12 @@ export default defineConfig({
 
   /* Configure projects for major browsers */
   projects: [
-    {
-      name: 'chromium',
-      use: {
-        ...devices['Desktop Chrome'],
-      },
-    },
+    // {
+    //   name: 'chromium',
+    //   use: {
+    //     ...devices['Desktop Chrome'],
+    //   },
+    // },
 
     // {
     //   name: 'firefox',
