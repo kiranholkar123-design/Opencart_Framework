@@ -1,0 +1,15 @@
+{
+  name: 'Vikram Deshmukh',
+  email: 'vikramdeshmukh_mtx33lcd@testuser.com',
+  gender: 'Male',
+  status: 'active'
+}
+Status Code: 201 
+Status Text: Created
+{
+  id: 8613275,
+  name: 'Vikram Deshmukh',
+  email: 'vikramdeshmukh_mtx33lcd@testuser.com',
+  gender: 'male',
+  status: 'active'
+}
