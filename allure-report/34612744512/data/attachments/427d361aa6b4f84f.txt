@@ -1,0 +1,15 @@
+{
+  name: 'Hugo Bernard',
+  email: 'hugobernard_mtx2szkm@testuser.com',
+  gender: 'Male',
+  status: 'active'
+}
+Status Code: 201 
+Status Text: Created
+{
+  id: 8613274,
+  name: 'Hugo Bernard',
+  email: 'hugobernard_mtx2szkm@testuser.com',
+  gender: 'male',
+  status: 'active'
+}
