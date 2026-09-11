@@ -15,6 +15,7 @@ test.afterEach(async ({ NALab }) => {
 test('TC 01_UI_AccountPage_TitleVisibility', async ({ NALab }) => {
     const allHeaders = await NALab.homePage.getHomePageHeaders();
     console.log(allHeaders);
+    console.log(allHeaders);
     expect.soft(allHeaders).toHaveLength(4);
     expect.soft(allHeaders).toContain("My Account")
     expect.soft(allHeaders).toEqual(messages.homePage.allHeaders)
