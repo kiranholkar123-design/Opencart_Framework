@@ -4,7 +4,7 @@ import fs from 'fs';
 
 const environment = process.env.ENV || 'dev';
 
-const allowedEnvs = ['dev', 'qa', 'prod'];
+const allowedEnvs = ['dev', 'qa', 'stage'];
 if (!allowedEnvs.includes(environment)) {
   throw new Error(
     `Invalid ENV="${environment}". Allowed values: ${allowedEnvs.join(', ')}`

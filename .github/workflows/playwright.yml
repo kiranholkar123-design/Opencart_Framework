@@ -12,10 +12,10 @@ on:
       environment:
         description: 'Select environment'
         required: true
-        default: 'QA'
+        default: 'qa'
         type: choice
         options:
-          - QA
+          - qa
           - stage
           - dev
 
