@@ -2,7 +2,7 @@ import dotenv from 'dotenv';
 import path from 'path';
 import fs from 'fs';
 
-const environment = process.env.ENV || 'dev';
+const environment = process.env.ENV || 'qa';
 
 const allowedEnvs = ['dev', 'qa', 'stage'];
 if (!allowedEnvs.includes(environment)) {
@@ -20,7 +20,7 @@ if (!fs.existsSync(envFilePath)) {
 }
 
 dotenv.config({ path: envFilePath });
-console.log(`\n✅ Loaded env: ${envFilePath}\n`);
+//console.log(`\n✅ Loaded env: ${envFilePath}\n`);
 
 // ── Helpers ───────────────────────────────────────────────
 function required(key: string): string {

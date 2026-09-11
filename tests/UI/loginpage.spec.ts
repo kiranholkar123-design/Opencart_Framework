@@ -1,6 +1,5 @@
 import { test, expect, Locator } from "../../src/fixtures/baseFixture";
 import { MESSAGES } from "../../src/constants/messages"
-import { Page } from "@playwright/test";
 import * as CONSTANTS from "../../src/constants/index"
 
 test('Verify user able to login',
@@ -31,7 +30,7 @@ test('Verify user able to login',
 test('Verify error message on incorrect email',
     async ({ NALab, assert, cred }) => {
         await test.step('launching the URL', async () => {
-            await NALab.loginPage.goToLoginPage(cred.baseUrl)
+            await NALab.loginPage.goToLoginPage(CONSTANTS.URL.loginPage)
         })
 
         await test.step('entering invalid login credentials', async () => {
@@ -51,7 +50,7 @@ test('Verify error message on incorrect email',
 test('Verify error message on clicking of sign in button on empty email and password',
     async ({ NALab, cred }) => {
         await test.step('Launch login page', async () => {
-            await NALab.loginPage.goToLoginPage(cred.baseUrl)
+            await NALab.loginPage.goToLoginPage(CONSTANTS.URL.loginPage)
         })
 
         await test.step('Click on sign in without credentials', async () => {
@@ -68,7 +67,7 @@ test('Verify shortcut links on login page',
     async ({ NALab, cred, assert }) => {
 
         await test.step('Launch login page', async () => {
-            await NALab.loginPage.goToLoginPage(cred.baseUrl)
+            await NALab.loginPage.goToLoginPage(CONSTANTS.URL.loginPage)
         })
 
         await test.step('Verify the count of the short cut links',
@@ -81,7 +80,8 @@ test('Verify shortcut links on login page',
         await test.step('Verify the title of the short cut links',
             async () => {
                 const allTitles = await NALab.loginPage.getShortCutLinksTitles();
-                await assert.toBe("Assert link count is 13",
+                console.log(allTitles);
+                await assert.toEqual("Assert link count is 13",
                     allTitles, CONSTANTS.TITLE.loginPage_shortCutLinkTitles)
             }
         )
@@ -91,7 +91,7 @@ test('TC_Login_RegisterLink_RedirectionToSignUp',
     async ({ NALab, cred, assert }) => {
 
         await test.step('Launch login page', async () => {
-            await NALab.loginPage.goToLoginPage(cred.baseUrl)
+            await NALab.loginPage.goToLoginPage(CONSTANTS.URL.loginPage)
         })
 
         await test.step('Verify the Register Account link visible on login page',
@@ -117,7 +117,7 @@ test('Verify user redirect to forgot password page',
 
         await test.step('Launch the login page URL',
             async () => {
-                await NALab.loginPage.goToLoginPage(cred.baseUrl)
+                await NALab.loginPage.goToLoginPage(CONSTANTS.URL.loginPage)
             }
         )
 

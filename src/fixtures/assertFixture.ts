@@ -1,5 +1,5 @@
 import { test as base } from '@playwright/test';
-import { AssertUtil } from "../utils/assert.util"
+import { AssertUtil } from "../utils/assertions/assert.util"
 
 type Fixtures = {
   assert: AssertUtil;

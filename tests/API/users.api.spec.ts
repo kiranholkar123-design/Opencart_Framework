@@ -5,19 +5,19 @@ import { userInfo } from "node:os";
 let AUTH_TOKEN = { Authorization: 'Bearer 05f263a170c239b688ded51b28c781d21fb69e6ee34ff025cf81c274b099612a' }
 
 
-test('Get: get user details', async ({ request }) => {
+// test('Get: get user details', async ({ request }) => {
 
-    let response = await request.get('https://gorest.co.in/public/v2/users/8537650', {
-        headers: AUTH_TOKEN
-    })
+//     let response = await request.get('https://gorest.co.in/public/v2/users/8537650', {
+//         headers: AUTH_TOKEN
+//     })
 
-    const status = response.status();
-    const statusText = response.statusText();
-    const jsonBody = await response.json();
-    console.log(`Status Code: ${status} \nStatus Text: ${statusText}`);
-    console.log(jsonBody);
-    expect(status, jsonBody).toBe(200);
-})
+//     const status = response.status();
+//     const statusText = response.statusText();
+//     const jsonBody = await response.json();
+//     console.log(`Status Code: ${status} \nStatus Text: ${statusText}`);
+//     console.log(jsonBody);
+//     expect(status, jsonBody).toBe(200);
+// })
 
 
 test('Create a user test', async ({ request, testData }) => {

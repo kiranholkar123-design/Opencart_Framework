@@ -57,14 +57,14 @@ export class ForgotPasswordPage extends BasePage {
     // ─── Actions ──────────────────────────────────────────────────────────────
 
     async submitForgotPasswordForm(emailID: string): Promise<void> {
-        await this.fill('Enter the email address',
+        await this.action.fill('Enter the email address',
             this.emailAddress_fld, emailID);
-        await this.click('click on continue button',
+        await this.action.click('click on continue button',
             this.continue_btn);
     }
 
     async clickBack(): Promise<void> {
-        await this.click('Click on back button',
+        await this.action.click('Click on back button',
             this.back_btn);
     }
 
