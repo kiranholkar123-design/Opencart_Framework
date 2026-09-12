@@ -92,4 +92,18 @@ export class WaitUtil {
             return request;
         });
     }
+
+    async isVisibleWithWait(title: string, locator: Locator, timeout?: number): Promise<boolean> {
+        return await test.step(title, async () => {
+            try {
+                await locator.waitFor({
+                    state: 'visible',
+                    ...(timeout !== undefined && { timeout }),
+                });
+                return true;
+            } catch {
+                return false;
+            }
+        });
+    }
 }

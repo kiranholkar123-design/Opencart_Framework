@@ -4,6 +4,8 @@ import { ForgotPasswordPage } from "./auth/ForgotPassword";
 import { HomePage } from "./dashboard/HomePage";
 import { LogOutPage } from "./auth/logoutPage";
 import { RegisterPage } from "./auth/RegisterPage";
+import { ChangePasswordPage } from "./auth/changePassword.page";
+import { Header } from "./sections/headerSection";
 
 export class PageManager {
   private cache = new Map<new (page: Page) => any, any>();
@@ -22,6 +24,12 @@ export class PageManager {
   get forgotPasswordPage() { return this.resolve(ForgotPasswordPage); }
   get homePage() { return this.resolve(HomePage); }
   get registerPage() { return this.resolve(RegisterPage) }
+  get changePasswordPage() { return this.resolve(ChangePasswordPage) }
+
+  //===============
+  // Sections
+  //==============
+  get header() { return this.resolve(Header) }
 }
 
 
