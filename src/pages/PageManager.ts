@@ -3,6 +3,7 @@ import { LoginPage } from "./auth/LoginPage";
 import { ForgotPasswordPage } from "./auth/ForgotPassword";
 import { HomePage } from "./dashboard/HomePage";
 import { LogOutPage } from "./auth/logoutPage";
+import { RegisterPage } from "./auth/RegisterPage";
 
 export class PageManager {
   private cache = new Map<new (page: Page) => any, any>();
@@ -20,6 +21,7 @@ export class PageManager {
   get logOutPage() { return this.resolve(LogOutPage); }
   get forgotPasswordPage() { return this.resolve(ForgotPasswordPage); }
   get homePage() { return this.resolve(HomePage); }
+  get registerPage() { return this.resolve(RegisterPage) }
 }
 
 

@@ -1,5 +1,5 @@
 import { Browser, chromium, Page, request } from "@playwright/test";
-import { LoginPage } from "../src/pages/auth/LoginPage";
+import { LoginPage } from "../src/pages/auth/loginPage";
 import { Context } from "node:vm";
 import { RandomUtils } from "../src/helpers/randomUtils";
 

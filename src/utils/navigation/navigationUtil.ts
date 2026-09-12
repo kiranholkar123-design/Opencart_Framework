@@ -1,7 +1,8 @@
 import { Page, Locator, test } from '@playwright/test';
+import { enableCompileCache } from 'node:module';
 
 export class NavigationUtil {
-  constructor(private page: Page) {}
+  constructor(private page: Page) { }
 
   // =========================================================
   // BASIC NAVIGATION
@@ -34,6 +35,28 @@ export class NavigationUtil {
       await this.page.reload({ waitUntil: 'load' });
     });
   }
+
+  // =========================================================
+  // PAGE INFO
+  // =========================================================
+  async getCurrentURL(step: string): Promise<string> {
+    return await test.step(step, async () => {
+      return this.page.url();
+    });
+  }
+
+  async getPageTitle(step: string): Promise<string> {
+    return await test.step(step, async () => {
+      return await this.page.title();
+    });
+  }
+
+  async isEndpointInCurrentUrl(step: string, eandPoint: string): Promise<boolean> {
+    return await test.step(step, async () => {
+      return this.page.url().includes(eandPoint);
+    });
+  }
+
 
   // =========================================================
   // WAITING FOR LOAD STATES
