@@ -1,6 +1,7 @@
 import test, { expect, Locator, Page } from "@playwright/test"
 import { BasePage } from "../BasePage"
 import * as CONSTANTS from '../../constants'
+import * as MODEL from "../../models/pages/index"
 
 export class HomePage extends BasePage {
 
@@ -21,6 +22,8 @@ export class HomePage extends BasePage {
     private readonly myOrder_hdr: Locator;
     private readonly myAffiliateAcnt_hrd: Locator;
     private readonly newslattter_hrd: Locator
+    private readonly homePageShortCutLinks: Locator;
+    private readonly passwordChangeSuccessAlert: Locator;
     //  private readonly loginBtn: Locator;             // Button to submit login form
     // private readonly forgottenPasswordLink: Locator;// Link to reset forgotten password
     // =========================================================
@@ -33,7 +36,9 @@ export class HomePage extends BasePage {
         this.myAcnt_Hdr = page.getByRole('heading', { name: 'My Account' });
         this.myOrder_hdr = page.getByRole('heading', { name: 'My Orders' });
         this.myAffiliateAcnt_hrd = page.getByRole('heading', { name: 'My Affiliate Account' });
-        this.newslattter_hrd = page.getByRole('heading', { name: 'Newsletter' })
+        this.newslattter_hrd = page.getByRole('heading', { name: 'Newsletter' });
+        this.homePageShortCutLinks = page.locator('.list-group a');
+        this.passwordChangeSuccessAlert = page.locator('.alert-success')
         //  this.loginBtn = page.getByRole('button', { name: 'Login' });
         // this.forgottenPasswordLink = page.getByRole('link', { name: 'Forgotten Password' }).first();
     }
@@ -52,6 +57,10 @@ export class HomePage extends BasePage {
     // =========================================================
     // STATE GETTERS (raw values — no assertions here)
     // =========================================================
+    async isOnHomePage(): Promise<boolean> {
+        const pageUrl = await this.navigation.getCurrentURL('Get the Home Page URL');
+        return pageUrl.includes(CONSTANTS.URL.myAccount)
+    }
 
     // =========================================================
     // LOCATOR GETTERS (expose Locator only when assert needs it directly)
@@ -77,6 +86,11 @@ export class HomePage extends BasePage {
         await this.action.click('Click on the logout link', this.logoutLink)
     }
 
+    async clickOnLink(linkName: MODEL.AccountMenuOption): Promise<void> {
+        await this.action.click(`Click on ${linkName} link`,
+            this.homePageShortCutLinks.filter({ hasText: linkName }))
+    }
+
     async isLoginSuccess(): Promise<boolean> {
         return await test.step(`Verifying successful login to application`, async () => {
             return await this.wait.waitForVisible('Wait for logout link to visible', this.logoutLink)
@@ -85,6 +99,12 @@ export class HomePage extends BasePage {
 
     async getHomePageHeaders(): Promise<string[]> {
         return await this.homePageHeaders.allInnerTexts()
+    }
+
+    async isChangePasswordAlertDisplayed(): Promise<boolean> {
+        return await this.wait.
+            isVisibleWithWait('Check is Change Password Alert Displayed',
+                this.passwordChangeSuccessAlert)
     }
 
 }

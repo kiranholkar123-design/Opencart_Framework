@@ -1,6 +1,8 @@
 // Import Playwright types for Locator and Page
 import test, { Locator, Page } from "@playwright/test"
 import { BasePage } from "../BasePage";
+import * as CONSTANTS from "../../constants/index"
+
 
 // Page Object Model (POM) class representing the Login Page
 export class LoginPage extends BasePage {
@@ -141,6 +143,11 @@ export class LoginPage extends BasePage {
         return await test.step('Retriving the text of the all links', async () => {
             return await this.shortCutLinks.allTextContents()
         })
+    }
+
+    async isOnLoginPage(): Promise<boolean> {
+        const pageUrl = await this.navigation.getCurrentURL('Get the Login Page URL');
+        return pageUrl.includes(CONSTANTS.URL.loginPage)
     }
     // =========================================================
     // LOCATOR GETTERS (expose Locator only when assert needs it directly)
