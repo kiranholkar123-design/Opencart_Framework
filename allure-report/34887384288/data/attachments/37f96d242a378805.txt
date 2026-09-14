@@ -1,0 +1,15 @@
+{
+  name: 'Sofia Rossi',
+  email: 'sofiarossi_mu1n2sbl@testuser.com',
+  gender: 'Female',
+  status: 'active'
+}
+Status Code: 201 
+Status Text: Created
+{
+  id: 8616052,
+  name: 'Sofia Rossi',
+  email: 'sofiarossi_mu1n2sbl@testuser.com',
+  gender: 'female',
+  status: 'active'
+}
