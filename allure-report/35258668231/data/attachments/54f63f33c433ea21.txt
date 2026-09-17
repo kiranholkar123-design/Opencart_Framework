@@ -1,0 +1,15 @@
+{
+  name: 'Hugo Dupont',
+  email: 'hugodupont_mu5v0zbb@testuser.com',
+  gender: 'Male',
+  status: 'active'
+}
+Status Code: 201 
+Status Text: Created
+{
+  id: 8625381,
+  name: 'Hugo Dupont',
+  email: 'hugodupont_mu5v0zbb@testuser.com',
+  gender: 'male',
+  status: 'active'
+}
