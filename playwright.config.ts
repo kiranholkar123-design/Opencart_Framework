@@ -34,7 +34,7 @@ export default defineConfig({
     actionTimeout: 30_000,
     navigationTimeout: 10_000,
 
-    headless: false,
+    headless: process.env ? true : false,
     video: 'retain-on-failure',
     /* Collect trace when retrying the failed test. See https://playwright.dev/docs/trace-viewer */
     trace: 'retain-on-failure',
