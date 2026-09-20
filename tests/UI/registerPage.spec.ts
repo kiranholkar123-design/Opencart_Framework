@@ -5,8 +5,8 @@ import { register } from "node:module";
 
 
 test('Verify User able to complete the Account creation/register form',
-    async ({ NALab, assert }) => {
-
+    async ({ createNALab, assert }) => {
+        const NALab = await createNALab()
 
         await test.step('Launching the URL',
             async () => {
@@ -32,7 +32,7 @@ test('Verify User able to complete the Account creation/register form',
                 await NALab.registerPage.reEnterPassword('test@123');
                 await NALab.registerPage.selectNewsletterSubscribe('Yes');
                 await NALab.registerPage.selectPrivecyPolicy('Yes')
-               // await NALab.registerPage.pause()
+                // await NALab.registerPage.pause()
             }
         )
 

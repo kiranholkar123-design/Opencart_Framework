@@ -45,6 +45,9 @@ export class HomePage extends BasePage {
     // =========================================================
     // NAVIGATION (entry point to this page)
     // =========================================================
+    async navigateToAccount(endPoint: string): Promise<void> {
+        await this.navigation.goto('Navigating to the Account Page', endPoint)
+    }
 
     // =========================================================
     // ATOMIC ACTIONS (single user interaction each)

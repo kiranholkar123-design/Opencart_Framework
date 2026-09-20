@@ -3,7 +3,8 @@ import { MESSAGES } from "../../src/constants/messages"
 import * as CONSTANTS from "../../src/constants/index"
 
 test('Verify user able to login',
-    async ({ NALab, cred }) => {
+    async ({ createNALab, cred }) => {
+        const NALab = await createNALab()
         await test.step('Launching the URL', async () => {
             await NALab.loginPage.goToLoginPage(CONSTANTS.URL.loginPage)
         })
@@ -28,7 +29,8 @@ test('Verify user able to login',
     });
 
 test('Verify error message on incorrect email',
-    async ({ NALab, assert, cred }) => {
+    async ({ createNALab, assert, cred }) => {
+        const NALab = await createNALab()
         await test.step('launching the URL', async () => {
             await NALab.loginPage.goToLoginPage(CONSTANTS.URL.loginPage)
         })
@@ -48,7 +50,8 @@ test('Verify error message on incorrect email',
     })
 
 test('Verify error message on clicking of sign in button on empty email and password',
-    async ({ NALab, cred }) => {
+    async ({ createNALab, cred }) => {
+        const NALab = await createNALab()
         await test.step('Launch login page', async () => {
             await NALab.loginPage.goToLoginPage(CONSTANTS.URL.loginPage)
         })
@@ -64,8 +67,8 @@ test('Verify error message on clicking of sign in button on empty email and pass
     })
 
 test('Verify shortcut links on login page',
-    async ({ NALab, cred, assert }) => {
-
+    async ({ createNALab, cred, assert }) => {
+        const NALab = await createNALab()
         await test.step('Launch login page', async () => {
             await NALab.loginPage.goToLoginPage(CONSTANTS.URL.loginPage)
         })
@@ -88,8 +91,8 @@ test('Verify shortcut links on login page',
     })
 
 test('TC_Login_RegisterLink_RedirectionToSignUp',
-    async ({ NALab, cred, assert }) => {
-
+    async ({ createNALab, cred, assert }) => {
+        const NALab = await createNALab()
         await test.step('Launch login page', async () => {
             await NALab.loginPage.goToLoginPage(CONSTANTS.URL.loginPage)
         })
@@ -113,8 +116,8 @@ test('TC_Login_RegisterLink_RedirectionToSignUp',
     })
 
 test('Verify user redirect to forgot password page',
-    async ({ NALab, cred }) => {
-
+    async ({ createNALab, cred }) => {
+        const NALab = await createNALab()
         await test.step('Launch the login page URL',
             async () => {
                 await NALab.loginPage.goToLoginPage(CONSTANTS.URL.loginPage)

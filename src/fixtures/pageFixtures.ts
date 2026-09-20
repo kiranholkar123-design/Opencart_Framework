@@ -1,17 +1,18 @@
 import { test as contextTest } from "../fixtures/contextFixture";
 import { PageManager } from "../pages/PageManager";
 
+type StorageState = string | { cookies: any[]; origins: any[] };
 
 type pageFixtures = {
-    NALab: PageManager
+    createNALab: (storageState?: StorageState) => Promise<PageManager>
 }
 
 export const test = contextTest.extend<pageFixtures>({
-    NALab: async ({ createContext }, use) => {
-        const { page } = await createContext();
-        const NALab = new PageManager(page);
-        await use(NALab);
+    createNALab: async ({ createContext }, use) => {
+        const factory = async (storageState?: StorageState) => {
+            const { page } = await createContext(storageState);
+            return new PageManager(page);
+        };
+        await use(factory);
     }
 })
-
-
