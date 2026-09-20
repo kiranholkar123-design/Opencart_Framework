@@ -24,7 +24,7 @@ export class HomePage extends BasePage {
     private readonly newslattter_hrd: Locator
     private readonly homePageShortCutLinks: Locator;
     private readonly passwordChangeSuccessAlert: Locator;
-    //  private readonly loginBtn: Locator;             // Button to submit login form
+    //  private readonly loginBtn: Locator;             
     // private readonly forgottenPasswordLink: Locator;// Link to reset forgotten password
     // =========================================================
     // CONSTRUCTOR
