@@ -10,7 +10,7 @@ function log(step: string, user?: string) {
 async function logoutFromNALab(storagePath: string) {
     log('Starting logout', storagePath);
 
-    const browser = await chromium.launch({ channel: 'chrome', headless: false });
+    const browser = await chromium.launch({ channel: 'chrome', headless: process.env.CI ? true : false });
     const context = await browser.newContext({ storageState: storagePath });
     const page = await context.newPage();
 
