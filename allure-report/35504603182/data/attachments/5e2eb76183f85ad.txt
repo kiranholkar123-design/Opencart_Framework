@@ -1,0 +1,15 @@
+{
+  name: 'Anna Weber',
+  email: 'annaweber_mu9nwr38@testuser.com',
+  gender: 'Female',
+  status: 'active'
+}
+Status Code: 201 
+Status Text: Created
+{
+  id: 8630664,
+  name: 'Anna Weber',
+  email: 'annaweber_mu9nwr38@testuser.com',
+  gender: 'female',
+  status: 'active'
+}
