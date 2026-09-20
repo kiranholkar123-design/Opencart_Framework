@@ -5,8 +5,8 @@ import { assert } from "node:console";
 
 
 test('Verify User Able to Change password',
-    async ({ createNALab, cred, assert }) => {
-        const NALab = await createNALab()
+    async ({ createNALabSession, cred, assert }) => {
+        const NALab = await createNALabSession()
 
         await test.step('Launch the Login URL',
             async () => {

@@ -24,7 +24,11 @@ export class HomePage extends BasePage {
     private readonly newslattter_hrd: Locator
     private readonly homePageShortCutLinks: Locator;
     private readonly passwordChangeSuccessAlert: Locator;
-    //  private readonly loginBtn: Locator;             // Button to submit login form
+
+    //search tab
+    private readonly searchTab_InpBox: Locator;
+    private readonly search_Icon: Locator;
+    //  private readonly loginBtn: Locator;             
     // private readonly forgottenPasswordLink: Locator;// Link to reset forgotten password
     // =========================================================
     // CONSTRUCTOR
@@ -39,6 +43,10 @@ export class HomePage extends BasePage {
         this.newslattter_hrd = page.getByRole('heading', { name: 'Newsletter' });
         this.homePageShortCutLinks = page.locator('.list-group a');
         this.passwordChangeSuccessAlert = page.locator('.alert-success')
+
+        // search tab
+        this.searchTab_InpBox = page.getByRole('textbox', { name: 'Search' });
+        this.search_Icon = page.locator('div#search span button')
         //  this.loginBtn = page.getByRole('button', { name: 'Login' });
         // this.forgottenPasswordLink = page.getByRole('link', { name: 'Forgotten Password' }).first();
     }
@@ -56,6 +64,10 @@ export class HomePage extends BasePage {
     // =========================================================
     // WORKFLOW ACTIONS (composite — multiple atomic actions combined)
     // =========================================================
+    async searchForProduct(productName: string): Promise<void> {
+        await this.action.fill(`Enter Product name: ${productName}`, this.searchTab_InpBox, productName)
+        await this.action.click(`Click on Search Icon/button`, this.search_Icon)
+    }
 
     // =========================================================
     // STATE GETTERS (raw values — no assertions here)

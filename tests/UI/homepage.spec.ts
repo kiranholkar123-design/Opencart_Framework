@@ -4,8 +4,8 @@ import * as CONSTANTS from "../../src/constants/index"
 import { SessionProvider } from "../../auth/ui/sessionProvidor";
 
 
-test('TC 01_UI_AccountPage_TitleVisibility', async ({ createNALab }) => {
-    const NALab = await createNALab(SessionProvider.getExistingUserSession())
+test('TC 01_UI_AccountPage_TitleVisibility', async ({ createNALabSession }) => {
+    const NALab = await createNALabSession(SessionProvider.getExistingUserSession())
     await NALab.homePage.navigateToAccount(CONSTANTS.URL.myAccount)
     const allHeaders = await NALab.homePage.getHomePageHeaders();
     console.log(allHeaders);

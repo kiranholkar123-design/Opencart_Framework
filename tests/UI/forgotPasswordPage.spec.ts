@@ -6,8 +6,8 @@ import { SessionProvider } from "../../auth/ui/sessionProvidor";
 
 
 test('TC_01 [Forgot Password Page] | ForgotPwd_RegisteredEmail_SuccessMsg_Verification',
-    async ({ createNALab, testData }) => {
-        const NALab = await createNALab()
+    async ({ createNALabSession, testData }) => {
+        const NALab = await createNALabSession()
         await NALab.loginPage.goToLoginPage(CONSTANTS.URL.loginPage);
         await NALab.loginPage.navigateToForgotPasswordPage();
         await NALab.forgotPasswordPage.submitForgotPasswordForm(testData.basicInfo.registeredEmail);
@@ -17,8 +17,8 @@ test('TC_01 [Forgot Password Page] | ForgotPwd_RegisteredEmail_SuccessMsg_Verifi
     })
 
 test('TC_02 [Forgot Password Page] | ForgotPwd_UnregisteredEmail_WarningMsg_Verification',
-    async ({ createNALab, testData }) => {
-        const NALab = await createNALab()
+    async ({ createNALabSession, testData }) => {
+        const NALab = await createNALabSession()
         await NALab.loginPage.goToLoginPage(CONSTANTS.URL.loginPage);
         await NALab.loginPage.navigateToForgotPasswordPage();
         await NALab.forgotPasswordPage.submitForgotPasswordForm(testData.basicInfo.unregisteredEmail);
