@@ -1,0 +1,2 @@
+[ 'My Account', 'My Orders', 'My Affiliate Account', 'Newsletter' ]
+[ 'My Account', 'My Orders', 'My Affiliate Account', 'Newsletter' ]

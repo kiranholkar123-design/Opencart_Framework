@@ -1,0 +1,15 @@
+{
+  name: 'Leon Becker',
+  email: 'leonbecker_muaokk49@testuser.com',
+  gender: 'Male',
+  status: 'active'
+}
+Status Code: 201 
+Status Text: Created
+{
+  id: 8631528,
+  name: 'Leon Becker',
+  email: 'leonbecker_muaokk49@testuser.com',
+  gender: 'male',
+  status: 'active'
+}
