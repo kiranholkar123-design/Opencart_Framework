@@ -1,0 +1,15 @@
+{
+  name: 'Divya Iyer',
+  email: 'divyaiyer_mubnffra@testuser.com',
+  gender: 'Female',
+  status: 'active'
+}
+Status Code: 201 
+Status Text: Created
+{
+  id: 8633242,
+  name: 'Divya Iyer',
+  email: 'divyaiyer_mubnffra@testuser.com',
+  gender: 'female',
+  status: 'active'
+}
