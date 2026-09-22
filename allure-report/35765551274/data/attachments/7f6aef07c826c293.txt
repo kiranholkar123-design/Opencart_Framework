@@ -1,0 +1,15 @@
+{
+  name: 'Oliver Smith',
+  email: 'oliversmith_muczr59m@testuser.com',
+  gender: 'Male',
+  status: 'active'
+}
+Status Code: 201 
+Status Text: Created
+{
+  id: 8634827,
+  name: 'Oliver Smith',
+  email: 'oliversmith_muczr59m@testuser.com',
+  gender: 'male',
+  status: 'active'
+}
