@@ -1,0 +1,15 @@
+{
+  name: 'Aditi Das',
+  email: 'aditidas_muefw28r@testuser.com',
+  gender: 'Female',
+  status: 'active'
+}
+Status Code: 201 
+Status Text: Created
+{
+  id: 8635983,
+  name: 'Aditi Das',
+  email: 'aditidas_muefw28r@testuser.com',
+  gender: 'female',
+  status: 'active'
+}
