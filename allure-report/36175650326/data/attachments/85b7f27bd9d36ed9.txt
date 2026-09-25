@@ -1,0 +1,15 @@
+{
+  name: 'Karan Malhotra',
+  email: 'karanmalhotra_muhbd6xo@testuser.com',
+  gender: 'Male',
+  status: 'active'
+}
+Status Code: 201 
+Status Text: Created
+{
+  id: 8638218,
+  name: 'Karan Malhotra',
+  email: 'karanmalhotra_muhbd6xo@testuser.com',
+  gender: 'male',
+  status: 'active'
+}
