@@ -1,0 +1,15 @@
+{
+  name: 'Kabir Verma',
+  email: 'kabirverma_mulpo1j4@testuser.com',
+  gender: 'Male',
+  status: 'active'
+}
+Status Code: 201 
+Status Text: Created
+{
+  id: 8641945,
+  name: 'Kabir Verma',
+  email: 'kabirverma_mulpo1j4@testuser.com',
+  gender: 'male',
+  status: 'active'
+}
