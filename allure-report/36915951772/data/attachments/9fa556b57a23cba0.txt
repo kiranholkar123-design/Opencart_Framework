@@ -1,0 +1,15 @@
+{
+  name: 'Ishita Patel',
+  email: 'ishitapatel_mupxw80b@testuser.com',
+  gender: 'Female',
+  status: 'active'
+}
+Status Code: 201 
+Status Text: Created
+{
+  id: 8645712,
+  name: 'Ishita Patel',
+  email: 'ishitapatel_mupxw80b@testuser.com',
+  gender: 'female',
+  status: 'active'
+}
