@@ -1,0 +1,15 @@
+{
+  name: 'Pooja Nair',
+  email: 'poojanair_muvrpo75@testuser.com',
+  gender: 'Female',
+  status: 'active'
+}
+Status Code: 201 
+Status Text: Created
+{
+  id: 8651716,
+  name: 'Pooja Nair',
+  email: 'poojanair_muvrpo75@testuser.com',
+  gender: 'female',
+  status: 'active'
+}
