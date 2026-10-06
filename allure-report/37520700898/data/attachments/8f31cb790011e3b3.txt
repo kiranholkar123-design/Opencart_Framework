@@ -1,0 +1,15 @@
+{
+  name: 'Camille Moreau',
+  email: 'camillemoreau_mux33lqc@testuser.com',
+  gender: 'Female',
+  status: 'active'
+}
+Status Code: 201 
+Status Text: Created
+{
+  id: 8654143,
+  name: 'Camille Moreau',
+  email: 'camillemoreau_mux33lqc@testuser.com',
+  gender: 'female',
+  status: 'active'
+}
