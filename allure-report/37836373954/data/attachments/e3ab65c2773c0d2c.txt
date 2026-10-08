@@ -1,0 +1,15 @@
+{
+  name: 'Isabella Ricci',
+  email: 'isabellaricci_muzyqvww@testuser.com',
+  gender: 'Female',
+  status: 'active'
+}
+Status Code: 201 
+Status Text: Created
+{
+  id: 8656951,
+  name: 'Isabella Ricci',
+  email: 'isabellaricci_muzyqvww@testuser.com',
+  gender: 'female',
+  status: 'active'
+}
