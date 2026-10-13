@@ -1,0 +1,15 @@
+{
+  name: 'Zuzanna Kowalska',
+  email: 'zuzannakowalska_mv74j5kb@testuser.com',
+  gender: 'Female',
+  status: 'active'
+}
+Status Code: 201 
+Status Text: Created
+{
+  id: 8666027,
+  name: 'Zuzanna Kowalska',
+  email: 'zuzannakowalska_mv74j5kb@testuser.com',
+  gender: 'female',
+  status: 'active'
+}
