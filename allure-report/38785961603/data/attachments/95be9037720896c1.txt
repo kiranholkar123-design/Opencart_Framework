@@ -1,0 +1,15 @@
+{
+  name: 'Ritika Kapoor',
+  email: 'ritikakapoor_mv9vjgie@testuser.com',
+  gender: 'Female',
+  status: 'active'
+}
+Status Code: 201 
+Status Text: Created
+{
+  id: 8667766,
+  name: 'Ritika Kapoor',
+  email: 'ritikakapoor_mv9vjgie@testuser.com',
+  gender: 'female',
+  status: 'active'
+}
