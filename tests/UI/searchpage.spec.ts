@@ -53,3 +53,12 @@ test('Search valid expected product',
 
     }
 )
+
+test('Search invalid product',
+    {
+        tag: ['@sanity', '@regression'],
+        annotation: [{
+            type: 'Title', description: ''
+        }]
+    }
+)
