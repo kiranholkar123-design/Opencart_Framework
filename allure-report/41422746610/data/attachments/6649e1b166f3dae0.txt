@@ -1,0 +1,15 @@
+{
+  name: 'Sneha Joshi',
+  email: 'snehajoshi_mvz2lwg4@testuser.com',
+  gender: 'Female',
+  status: 'active'
+}
+Status Code: 201 
+Status Text: Created
+{
+  id: 8695696,
+  name: 'Sneha Joshi',
+  email: 'snehajoshi_mvz2lwg4@testuser.com',
+  gender: 'female',
+  status: 'active'
+}
