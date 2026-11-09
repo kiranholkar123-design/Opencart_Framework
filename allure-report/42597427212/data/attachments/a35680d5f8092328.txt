@@ -1,0 +1,15 @@
+{
+  name: 'Aarav Sharma',
+  email: 'aaravsharma_mw93aeh7@testuser.com',
+  gender: 'Male',
+  status: 'active'
+}
+Status Code: 201 
+Status Text: Created
+{
+  id: 8705830,
+  name: 'Aarav Sharma',
+  email: 'aaravsharma_mw93aeh7@testuser.com',
+  gender: 'male',
+  status: 'active'
+}
