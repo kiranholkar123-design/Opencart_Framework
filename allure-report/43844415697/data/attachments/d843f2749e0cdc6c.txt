@@ -1,0 +1,15 @@
+{
+  name: 'Yash Saxena',
+  email: 'yashsaxena_mwj3c8q8@testuser.com',
+  gender: 'Male',
+  status: 'active'
+}
+Status Code: 201 
+Status Text: Created
+{
+  id: 8712488,
+  name: 'Yash Saxena',
+  email: 'yashsaxena_mwj3c8q8@testuser.com',
+  gender: 'male',
+  status: 'active'
+}
